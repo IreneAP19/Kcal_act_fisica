@@ -63,7 +63,22 @@ if st.button("Predecir"):
         else:
             #  Predicción con el segundo modelo
             prediccion_final = modelo.predict(nueva_entrada)
-            st.success(f"📊 **Predicción final:** {prediccion_final[0]}")
+            st.success(f"📊 **Predicción calorias gastadas en actividad fisica:** {prediccion_final[0]}")
+
+            datos_usuario1 = {
+                "Male": int(entrada_ob[0, 3]),
+                "Peso": int(entrada_ob[0, 4]), 
+                "freq_ejer": int(),
+                "Age": entrada_ob[0, 1],  # Edad
+                "Male": int(entrada_ob[0, 2]),  # Sexo (1=Hombre, 0=Mujer)
+                "kcla_ejer":prediccion_final[0]
+
+        }
+
+        # 🔹 Aplicar la función de utils para calcular el % de grasa corporal
+        porcentaje_grasa = utils.calcular_grasa_bmi(datos_usuario)
+        st.write(f"**Porcentaje estimado de grasa corporal:** {porcentaje_grasa:.2f}%")
+
 
     except ValueError:
         st.error("⚠️ Asegúrate de ingresar valores numéricos separados por comas.")
