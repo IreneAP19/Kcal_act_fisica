@@ -74,3 +74,24 @@ def train_evaluate_model(model, X_train, y_train, X_test, y_test):
     print("RMSE", mean_squared_error(y_test, y_pred) ** (1/2))
     sns.displot(y_pred - y_test)
     return model
+
+#----------------------------------------------------------------
+import re
+
+def convertir_tiempo_a_decimal(tiempo):
+
+    horas = 0
+    minutos = 0
+
+    # Buscar horas y minutos con expresiones regulares
+    match_horas = re.search(r"(\d+)h", tiempo)
+    match_minutos = re.search(r"(\d+)min", tiempo)
+
+    if match_horas:
+        horas = int(match_horas.group(1))
+    if match_minutos:
+        minutos = int(match_minutos.group(1))
+
+    return horas + (minutos / 60)
+
+    
