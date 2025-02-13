@@ -8,14 +8,14 @@ st.set_page_config(page_title="Calculadora IMC y Kcal", layout="centered")
 # Cargar los modelos
 @st.cache_data
 def cargar_modelo_ob():
-    with open("../modelos/rnd_reg_obesity.pkl", "rb") as f:
-        modelo = pickle.load(f)
+    with open("../modelos/rnd_reg_obesity.pkl", "rb") as obes_model:
+        modelo = pickle.load(obes_model)
     return modelo
 
 @st.cache_data
 def cargar_modelo():
-    with open("../modelos/rrnd_reg.pkl", "rb") as f:
-        modelo = pickle.load(f)
+    with open("../modelos/rrnd_reg.pkl", "rb") as kcal_ejer:
+        modelo = pickle.load(kcal_ejer)
     return modelo
 
 modelo_ob = cargar_modelo_ob()
@@ -99,7 +99,7 @@ if st.button("Predecir"):
             "Male": int(entrada_ob[0, 2])  # Sexo (1=Hombre, 0=Mujer)
         }
 
-        # 🔹 Aplicar la función de utils para calcular el % de grasa corporal
+        #  Aplicar la función de utils para calcular el % de grasa corporal
         porcentaje_grasa = utils.calcular_grasa_bmi(datos_usuario)
         st.write(f"**Porcentaje estimado de grasa corporal:** {porcentaje_grasa:.2f}%")
 
