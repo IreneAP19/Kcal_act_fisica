@@ -3,6 +3,8 @@ import pickle
 import numpy as np
 import utils 
 
+
+st.set_page_config(page_title="Calculadora IMC y Kcal", layout="centered")
 # Cargar los modelos
 @st.cache_data
 def cargar_modelo_ob():
@@ -19,8 +21,41 @@ def cargar_modelo():
 modelo_ob = cargar_modelo_ob()
 modelo = cargar_modelo()
 
-#Título de la App
-st.title("Predicción con Dos Modelos en Streamlit 🚀")
+# Estilos personalizados con CSS
+def set_background():
+    st.markdown(
+        """
+        <style>
+        .stApp {
+            background: linear-gradient(to right, #ff9a9e, #fad0c4, #ffdde1, #a18cd1, #fbc2eb);
+        }
+        .title {
+            font-size: 30px;
+            font-weight: bold;
+            color: #4CAF50;
+            text-align: center;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+set_background()
+
+
+# Pantalla principal explicativa
+st.markdown("# Bienvenido a la Calculadora de IMC y Calorías Diarias 🏋️‍♂️")
+st.write("Esta aplicación te ayudará a calcular tu Índice de Masa Corporal (IMC) y la cantidad de calorías diarias recomendadas según tu nivel de actividad. 💪")
+st.write("### ¿Cómo funciona?")
+st.write("1️⃣ Ingresa tu peso, altura y edad.")
+st.write("2️⃣ Selecciona tu nivel de actividad física.")
+st.write("3️⃣ Presiona el botón calcular y obtendrás tu IMC y las calorías diarias recomendadas.")
+
+st.write("---")
+
+# Carga de imagen
+# top_image = Image.open("fitness.png")
+# st.image(top_image, use_column_width=True)
 
 # Entrada del usuario con texto explicativo
 Age = st.number_input("Ingresa tu edad (años):", min_value=0, max_value=120, value=30)
