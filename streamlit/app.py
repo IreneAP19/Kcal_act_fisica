@@ -32,7 +32,7 @@ def set_background():
         .title {
             font-size: 30px;
             font-weight: bold;
-            color: #4CAF50;
+            color:rgb(20, 119, 117);
             text-align: center;
         }
         </style>
@@ -47,10 +47,10 @@ set_background()
 st.markdown("# Bienvenido a la Calculadora de IMC y Calorías Diarias 🏋️‍♂️")
 st.write("Esta aplicación te ayudará a calcular tu Índice de Masa Corporal (IMC) y la cantidad de calorías diarias recomendadas según tu nivel de actividad. 💪")
 st.write("### ¿Cómo funciona?")
-st.write("1️⃣ Ingresa tu peso, altura y edad.")
-st.write("2️⃣ Selecciona tu nivel de actividad física.")
-st.write("3️⃣ Presiona el botón calcular y obtendrás tu IMC y las calorías diarias recomendadas.")
-
+st.write("1️⃣ Ingresa tus datos como peso, altura y edad.")
+st.write("2️⃣ Presiona el botón calcular y obtendrás tu IMC.")
+st.write("3️⃣ Selecciona tu nivel de actividad física, ejercico que quieres realizar....")
+st.write("4️⃣ Presiona el botón calcular y obtendrás la kcal que gastarás y la recomendación de ingesta calórica diaria.")
 st.write("---")
 
 # Carga de imagen
@@ -105,6 +105,49 @@ if st.button("Predecir"):
 
         imc_clasificacion=utils.clasificar_bmi(prediccion_ob[0])
         st.write(f"**Clasificación según el porcentaje graso:** {imc_clasificacion}")
+
+
+        # # Añadir barra de IMC interactiva con colores
+        # imc_value = prediccion_ob[0]
+        # colores = {
+        #     'Infrapeso': 'red',
+        #     'Normal': 'yellowgreen',
+        #     'Sobrepeso': 'yellow',
+        #     'Obesidad': 'red'
+        # }
+
+        # # Determinar la categoría y mostrar la barra con colores
+        # if imc_value < 18.5:
+        #     arrow_position = "0%"  # Infrapeso
+        # elif 18.5 <= imc_value < 24.9:
+        #     arrow_position = "25%"  # Normal
+        # elif 25 <= imc_value < 29.9:
+        #     arrow_position = "50%"  # Sobrepeso
+        # else:
+        #     arrow_position = "75%"  # Obesidad
+        # # Mostrar barra de IMC con colores
+        # st.markdown(f"""
+        # <style>
+        # .imc-bar {{
+        #     width: 100%;
+        #     height: 20px;
+        #     background: linear-gradient(to right, 
+        #         red 0%, yellow 25%, yellowgreen 50%, yellow 75%, red 100%);
+        #     border-radius: 10px;
+        #     position: relative;
+        # }}
+        # .arrow {{
+        #     position: absolute;
+        #     top: -10px;
+        #     left: {arrow_position};
+        #     font-size: 30px;
+        #     color: black;
+        # }}
+        # </style>
+        # <div class="imc-bar">
+        #     <div class="arrow">↑</div>
+        # </div>
+        # """, unsafe_allow_html=True)
 #--------------Nueva entrada para el segundo modelo
         tipo_ejer = {
            'Yoga': 0, 
