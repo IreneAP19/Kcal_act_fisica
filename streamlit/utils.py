@@ -1,5 +1,5 @@
 from sklearn.metrics import mean_squared_error,mean_absolute_error
-
+import seaborn as sns
 def clasificar_bmi(imc):
     if imc < 18.5:
         return 'Insufficient_Weight'
@@ -31,16 +31,64 @@ def calcular_grasa_bmi(row):
 
 #--------------------------------------------------------------   
 
-def calcular_macronutrientes(calorias_totales):
-    carb_cal = 0.50 * calorias_totales
-    prot_cal = 0.35 * calorias_totales
-    gras_cal = 0.15 * calorias_totales
+# def calcular_macronutrientes(calorias_totales):
+#     carb_cal = 0.50 * calorias_totales
+#     prot_cal = 0.35 * calorias_totales
+#     gras_cal = 0.15 * calorias_totales
+
+#     carb_g = carb_cal / 4
+#     prot_g = prot_cal / 4
+#     gras_g = gras_cal / 9
+
+#     resultado_str = f"Gramos de carbohidratos: {round(carb_g)}\nGramos de proteinas: {round(prot_g)}\nGramos de grasa: {round(gras_g)}"
+
+#     macronutrientes_dict = {
+#         "Carbohidratos (g)": round(carb_g),
+#         "Proteinas (g)": round(prot_g),
+#         "Grasas (g)": round(gras_g)
+#     }
+
+#     return resultado_str, macronutrientes_dict
+def calcular_macronutrientes(calorias_totales, sexo, objetivo):
+    # Ajustes según el sexo y el objetivo
+    if sexo == 1:
+        if objetivo == "mantener":
+            carb_ratio, prot_ratio, gras_ratio = 0.50, 0.35, 0.15
+        elif objetivo == "ganar":
+            carb_ratio, prot_ratio, gras_ratio = 0.55, 0.30, 0.15
+        elif objetivo == "perder":
+            carb_ratio, prot_ratio, gras_ratio = 0.40, 0.40, 0.20
+    elif sexo == 0:
+        if objetivo == "mantener":
+            carb_ratio, prot_ratio, gras_ratio = 0.50, 0.25, 0.25
+        elif objetivo == "ganar":
+            carb_ratio, prot_ratio, gras_ratio = 0.55, 0.25, 0.20
+        elif objetivo == "perder":
+            carb_ratio, prot_ratio, gras_ratio = 0.55, 0.40, 0.15
+
+    carb_cal = carb_ratio * calorias_totales
+    prot_cal = prot_ratio * calorias_totales
+    gras_cal = gras_ratio * calorias_totales
 
     carb_g = carb_cal / 4
     prot_g = prot_cal / 4
     gras_g = gras_cal / 9
 
-    return f"CH_g:{carb_g},P_g: {prot_g}, G_g:{gras_g}"
+    resultado_str = (
+        f"Objetivo para {objetivo} peso: {objetivo.capitalize()} peso\n"
+        f"Gramos de carbohidratos: {round(carb_g)} g\n"
+        f"Gramos de proteinas: {round(prot_g)} g\n"
+        f"Gramos de grasa: {round(gras_g)} g"
+    )
+
+    macronutrientes_dict = {
+        "Objetivo para": objetivo,
+        "Carbohidratos (g)": round(carb_g),
+        "Proteinas (g)": round(prot_g),
+        "Grasas (g)": round(gras_g)
+    }
+
+    return resultado_str, macronutrientes_dict
 
 #--------------------------------------------------------------
 
@@ -93,5 +141,103 @@ def convertir_tiempo_a_decimal(tiempo):
         minutos = int(match_minutos.group(1))
 
     return horas + (minutos / 60)
+#---------------------------------------
+def objetivo(imc):
+    if imc < 18.5:
+        return ["mantener", "ganar"] 
+    elif 18.5 <= imc < 25:
+        return ["mantener", "ganar", "perder"]  
+    else:
+        return ["mantener", "perder"] 
+#-----------------------------
+def recomendaciones(imc):
+    if imc < 18.5:
+        
+        return """**Objetivo Recomendable:** Ganar peso de manera saludable.
 
-    
+    **Nutrición:**  
+    - Aumentar la ingesta calórica con alimentos nutritivos (unas 300 kcal diarias de las recomendadas como máximo para que sea progresivo).  
+    - Incluir más proteínas (pollo, pescado, huevos, legumbres).  
+    - Consumir grasas saludables (aguacate, frutos secos, aceite de oliva).  
+    - Aumentar la frecuencia de comidas (5-6 al día).  
+
+    **Ejercicio recomendado:**  
+    - **Fuerza:** Priorizar entrenamiento con pesas para ganar masa muscular.  
+    - **Cardio:** Moderado, no excesivo, para no quemar demasiadas calorías.
+
+**Objetivo Mantener Peso:** Mantener un estilo de vida saludable.
+
+    **Nutrición:**  
+    - Balance entre proteínas, carbohidratos y grasas saludables.  
+    - Evitar exceso de azúcares y ultraprocesados.  
+    - Hidratarse bien (mínimo 2L de agua al día).  
+
+    **Ejercicio recomendado:**  
+    - **Fuerza:** 2-3 veces por semana para mantener tono muscular.  
+    - **Cardio:** 3-5 veces por semana (puede incluir HIIT y ejercicios aeróbicos).  
+    - **Movilidad:** Yoga o estiramientos para evitar lesiones."""
+
+    elif 18.5 <= imc < 25:
+        return """**Objetivo Recomendable:** Mantener un estilo de vida saludable.
+
+    **Nutrición:**  
+    - Balance entre proteínas, carbohidratos y grasas saludables.  
+    - Evitar exceso de azúcares y ultraprocesados.  
+    - Hidratarse bien (mínimo 2L de agua al día).  
+
+    **Ejercicio recomendado:**  
+    - **Fuerza:** 2-3 veces por semana para mantener tono muscular.  
+    - **Cardio:** 3-5 veces por semana (puede incluir HIIT y ejercicios aeróbicos).  
+    - **Movilidad:** Yoga o estiramientos para evitar lesiones.
+
+**Objetivo:** Ganar peso de manera saludable.
+
+    **Nutrición:**  
+    - Aumentar la ingesta calórica con alimentos nutritivos (unas 300 kcal diarias de las recomendadas como máximo para que sea progresivo).  
+    - Incluir más proteínas (pollo, pescado, huevos, legumbres).  
+    - Consumir grasas saludables (aguacate, frutos secos, aceite de oliva).  
+    - Aumentar la frecuencia de comidas (5-6 al día).  
+
+    **Ejercicio recomendado:**  
+    - **Fuerza:** Priorizar entrenamiento con pesas para ganar masa muscular.  
+    - **Cardio:** Moderado, no excesivo, para no quemar demasiadas calorías.
+
+**Objetivo :** Reducir peso de forma progresiva y saludable.
+
+    **Nutrición:**  
+    - Mantener un déficit calórico controlado (-300 kcal diarias de las recomendadas como máximo).  
+    - Aumentar el consumo de vegetales, proteínas magras y fibra.  
+    - Reducir ultraprocesados, refrescos y azúcares añadidos.  
+
+    **Ejercicio recomendado:**  
+    - **Cardio:** Priorizar ejercicios aeróbicos de bajo impacto (caminar, nadar, bicicleta).  
+    - **Fuerza:** Fundamental para preservar masa muscular mientras se pierde grasa.  
+    - **HIIT:** Incluir sesiones cortas y progresivas según la condición física."""
+
+    else:
+        return """**Objetivo Recomendable:** Reducir peso de forma progresiva, saludable y controlada.
+
+    **Nutrición:**  
+    - Mantener un déficit calórico controlado (-300 kcal diarias de las recomendadas como máximo).  
+    - Aumentar el consumo de vegetales, proteínas magras y fibra.  
+    - Reducir ultraprocesados, refrescos y azúcares añadidos.  
+
+    **Ejercicio recomendado:**  
+    - **Cardio:** Priorizar ejercicios aeróbicos de bajo impacto (caminar, nadar, bicicleta).  
+    - **Fuerza:** Fundamental para preservar masa muscular mientras se pierde grasa.  
+    - **HIIT:** Incluir sesiones cortas y progresivas según la condición física.
+
+**Objetivo:** Mantener un estilo de vida saludable.
+
+    **Nutrición:**  
+    - Balance entre proteínas, carbohidratos y grasas saludables.  
+    - Evitar exceso de azúcares y ultraprocesados.  
+    - Hidratarse bien (mínimo 2L de agua al día).  
+
+    **Ejercicio recomendado:**  
+    - **Fuerza:** 2-3 veces por semana para mantener tono muscular.  
+    - **Cardio:** 3-5 veces por semana (puede incluir HIIT y ejercicios aeróbicos).  
+    - **Movilidad:** Yoga o estiramientos para evitar lesiones."""
+
+
+
