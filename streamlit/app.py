@@ -12,9 +12,9 @@ st.set_page_config(page_title="Calculadora IMC y Kcal", layout="wide")
 
 # Cargar modelos
 @st.cache_data
-def cargar_modelo_ob():
-    with open("../modelos/pol2_ob.pkl", "rb") as model_pol2_ob:
-        return pickle.load(model_pol2_ob)
+def cargar_modelo_ob_cop():
+    with open("../modelos/rnd_ob_cop.pkl", "rb") as model_rnd_ob_cop:
+        return pickle.load(model_rnd_ob_cop)
 
 @st.cache_data
 def cargar_modelo():
@@ -25,11 +25,15 @@ def cargar_modelo():
 def cargar_polynomial_features():
     with open("../modelos/pol2_transform_ejer.pkl", "rb") as pol_transf_ejer:
         return pickle.load(pol_transf_ejer)
+def cargar_modelo_ob():
+    with open("../modelos/pol2_ob.pkl", "rb") as model_pol2_ob:
+        return pickle.load(model_pol2_ob)
 @st.cache_data
 def cargar_polynomial_features_ob():
     with open("../modelos/pol2_transform_ob.pkl", "rb") as pol_transf_ob:
         return pickle.load(pol_transf_ob)
-    
+
+modelo_ob_cop = cargar_modelo_ob_cop()
 modelo_ob = cargar_modelo_ob()
 modelo = cargar_modelo()
 pol_2 = cargar_polynomial_features()
@@ -161,10 +165,9 @@ elif opcion == "Cálculo de IMC":
     
         # Convertir la entrada en un array numérico
         entrada_ob = np.array([[Age,Height, Weight, family_with_overweight_valor,Alcohol,Andar_bici_valor,Control_kcal_valor,FastFood_valor,Male_valor]]).reshape(1, -1)
-
+        
         entrada_kcal_ejer_pol2 = pol_2_ob.transform(entrada_ob)
         prediccion_ob = modelo_ob.predict(entrada_kcal_ejer_pol2)
-        
         st.write(f"📊 **IMC Calculado:** {prediccion_ob[0]:.2f}")
 
         datos_usuario = {
@@ -177,10 +180,13 @@ elif opcion == "Cálculo de IMC":
         porcentaje_grasa = utils.calcular_grasa_bmi(datos_usuario)
         st.write(f"**Porcentaje estimado de grasa corporal:** {porcentaje_grasa:.2f}%")
 
-        imc_clasificacion=utils.clasificar_bmi(prediccion_ob[0])
-        st.write(f"**Clasificación según el porcentaje graso:** {imc_clasificacion}")
+        
+        prediccion_tipo_ini = modelo_ob_cop.predict(entrada_ob)
+        prediccion_tipo = round(prediccion_tipo_ini[0])
+        predic_tipo=utils.label(prediccion_tipo)
+        st.write(f"**Clasificación:** {predic_tipo}")
 
-
+        
         # Añadir barra de IMC interactiva con colores
         imc_value = prediccion_ob[0]
         colores = {
@@ -192,13 +198,19 @@ elif opcion == "Cálculo de IMC":
 
         # Determinar la categoría y mostrar la barra con colores
         if imc_value < 18.5:
-            arrow_position = "0%"  # Infrapeso
+            arrow_position = "0%"
         elif 18.5 <= imc_value < 24.9:
-            arrow_position = "25%"  # Normal
-        elif 25 <= imc_value < 29.9:
-            arrow_position = "50%"  # Sobrepeso
+            arrow_position = "40%"
+        elif 24.9 <= imc_value < 27.9:
+            arrow_position = "50%"
+        elif 27.9 <= imc_value < 29.9:
+            arrow_position = "60%"
+        elif 29.9 <= imc_value < 34.9:
+            arrow_position = "80%"
+        elif 34.9 <= imc_value <= 39.9:
+            arrow_position = "90%"
         else:
-            arrow_position = "75%"  # Obesidad
+            arrow_position = "100%"
         # Mostrar barra de IMC con colores
         st.markdown(f"""
         <style>
@@ -222,7 +234,7 @@ elif opcion == "Cálculo de IMC":
             <div class="arrow">↑</div>
         </div>
         """, unsafe_allow_html=True)
-        st.session_state["prediccion_ob"] = prediccion_ob[0]
+        st.session_state["prediccion_ob"] = Weight/(Height**2)
         st.session_state["male"] = Male_valor
         st.session_state["weight"] = Weight
         st.session_state["height"] = Height

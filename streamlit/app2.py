@@ -5,6 +5,8 @@ import utils
 import plotly.express as px
 from PIL import Image
 from sklearn.preprocessing import PolynomialFeatures
+from streamlit_option_menu import option_menu  
+
 
 st.set_page_config(page_title="Calculadora IMC y Kcal", layout="wide")
 
@@ -32,6 +34,8 @@ modelo_ob = cargar_modelo_ob()
 modelo = cargar_modelo()
 pol_2 = cargar_polynomial_features()
 pol_2_ob = cargar_polynomial_features_ob()
+import streamlit as st
+from streamlit_option_menu import option_menu  # Asegúrate de tener instalada la librería `streamlit-option-menu`
 
 def set_background():
     st.markdown(
@@ -50,17 +54,83 @@ def set_background():
 
 set_background()
 
-st.sidebar.title("📌 Menú de Navegación")
-opcion = st.sidebar.radio("Selecciona una sección:", ["Inicio", "Cálculo de IMC","Cálculo de Calorías de Ejercicio", "Estimación de kcal diarias y Recomendaciones", "Gráficos y Análisis"])
+# Personalización de los estilos
+styles = {
+    # Estilo del contenedor principal con el degradado de fondo
+    "main_container": {
+        "background": "linear-gradient(to right, #6a0dad, #ff66cc)",  # Degradado de morados y rosas
+        "color": "white",  # Color de texto blanco
+        "padding": "20px",
+    },
+    # Estilo del menú de la barra lateral
+    "menu": {
+        "color": "white",
+        "background-color": "#D8BFD8",  # Fondo sólido del menú (un tono oscuro morado)
+        "font-size": "16px",
+    },
+    # Estilo de la opción seleccionada en el menú
+    "menu_selected": {
+        "background-color": "#D8BFD8",  # Color morado para la opción seleccionada
+        "color": "white",
+    },
+    # Estilo de los iconos del menú
+    "icon": {
+        "font-size": "20px",
+        "color": "white",
+    },
+    # Estilo de las barras de selección (sliders, inputs, etc.)
+    "input": {
+        "background-color": "#D8BFD8",  # Rosa para las barras de selección
+        "color": "white",
+        "border-radius": "5px",
+    },
+    # Estilo para los botones de predicción (en tonos morados)
+    "button": {
+        "background-color": "#E6E6FA",  # Color morado
+        "color": "white",
+        "padding": "10px 20px",
+        "border-radius": "5px",
+    }
+}
+
+
+# Menú con iconos en la barra lateral
+with st.sidebar:
+    opcion= option_menu(
+        menu_title="Menú de Navegación 🦝",
+        options=[
+            "Inicio",
+            "Cálculo de IMC",
+            "Cálculo de Calorías de Ejercicio",
+            "Estimación de kcal diarias y Recomendaciones",
+            "Gráficos y Análisis"
+        ],
+        icons=[
+            "house",
+            "calculator",
+            "activity",
+            "fire",
+            "bar-chart",
+        ],
+        default_index=0,
+        orientation="vertical",
+        styles={
+            "container": {"padding": "10px", "background-color": styles["menu"]["background-color"]},
+            "menu": styles["menu"],
+            "menu_selected": styles["menu_selected"],
+            "icon": styles["icon"],
+        }
+    )
+
 
 if opcion == "Inicio":
     st.title("Bienvenido a la Calculadora de IMC y Calorías Diarias")
-    st.image("../img/lemur.png", width=180)
+    st.image("../img/lemur.png", width=250)
     st.write("Esta aplicación te ayudará a calcular tu Índice de Masa Corporal (IMC) y la cantidad de calorías diarias recomendadas según tu nivel de actividad. 💪")
 
 
 elif opcion == "Cálculo de IMC":
-    st.title("📊 Cálculo de IMC")
+    st.title("⚖️ Cálculo de IMC")
     Age = st.number_input("Ingresa tu edad (años):", min_value=0, max_value=120, value=30)
     Male = st.selectbox("Selecciona tu género:", options=["Hombre", "Mujer"])
     Weight = st.number_input("Ingresa tu peso (kg):", min_value=30, max_value=200, value=70)
@@ -68,7 +138,7 @@ elif opcion == "Cálculo de IMC":
     #frecuencia_ejercicio = st.number_input("Frecuencia de ejercicio (días/semana):", min_value=0, max_value=7, value=3)
     family_with_overweight=st.selectbox("¿Antecedentes familiares de obesidad?:", options=["Si", "No"])
     opciones_alcohol = {
-        "No": 0,
+        "Nunca": 0,
         "A veces": 1,
         "Mucha fecuencia": 2,
         "Todos los dias": 3
@@ -160,6 +230,8 @@ elif opcion == "Cálculo de IMC":
         st.session_state["porcentaje_grasa"] = porcentaje_grasa
 
 elif opcion == "Cálculo de Calorías de Ejercicio":
+    st.title("🔥 Cálculo de Calorías de Ejercicio")
+    
     tipo_ejer = {
         'Yoga': 0, 
         'Strength': 1, 
@@ -214,60 +286,99 @@ elif opcion == "Cálculo de Calorías de Ejercicio":
                 st.error(f"Error en la predicción: {e}")
 
 elif opcion == "Estimación de kcal diarias y Recomendaciones":
-    st.title("🔥 Kcal recomendadas y Macronutrientes")
+    st.title("🥭 Kcal recomendadas y Macronutrientes")
+   
+    required_keys = ["male", "weight", "height", "freq_ejer", "age", "kcal_ejer", "prediccion_ob"]
+    missing_keys = [key for key in required_keys if key not in st.session_state]
 
-    kcal_recomendadas = utils.gasto_calorico(
-        st.session_state["male"],
-        st.session_state["weight"],
-        st.session_state["height"] * 100,  
-        st.session_state["freq_ejer"],
-        st.session_state["age"],
-        st.session_state["kcal_ejer"]
-    )
-        
-    st.write(f"**Calorías diarias recomendadas:** {kcal_recomendadas:.2f} kcal")
-    st.session_state["kcal_rec"] = kcal_recomendadas
-    # Calcular la distribución de macronutrientes
-    resultado_str, macronutrientes_dict = utils.calcular_macronutrientes(round(kcal_recomendadas, 2))
+    if missing_keys:
+        st.warning(f"Faltan los siguientes datos: {', '.join(missing_keys)}. Por favor, complete los campos anteriores.")
+    else:
+        try:
+            objetivos=utils.objetivo(st.session_state["prediccion_ob"])
+            st.session_state["objetivos"] = objetivos
+            kcal_recomendadas = utils.gasto_calorico(
+                st.session_state["male"],
+                st.session_state["weight"],
+                st.session_state["height"] * 100,  
+                st.session_state["freq_ejer"],
+                st.session_state["age"],
+                st.session_state["kcal_ejer"]
+            )
+                
+            st.write(f"**Calorías diarias recomendadas:** {kcal_recomendadas:.2f} kcal")
+            st.session_state["kcal_rec"] = kcal_recomendadas
+            # Calcular la distribución de macronutrientes
+            for i, objetivo in enumerate(objetivos):
+                # Calcular macronutrientes para el objetivo actual
+                resultado_str, macronutrientes_dict = utils.calcular_macronutrientes(round(kcal_recomendadas, 2), st.session_state["male"], objetivo)
 
-    # Guardar los macronutrientes en session_state
-    st.write(f"**Distribución de Macronutrientes:** ")
-    st.session_state["macros"] = macronutrientes_dict
-    macros = st.session_state.get("macros", {})
+                # Guardar los macronutrientes en session_state
+                st.session_state[f"macros_{objetivo}"] = macronutrientes_dict
 
-    # Verificar los valores que se extraen del diccionario
-    carbohidratos = macros.get("Carbohidratos (g)", 0)
-    proteinas = macros.get("Proteinas (g)", 0)
-    grasas = macros.get("Grasas (g)", 0)
-    st.session_state["Prot"] = proteinas
-    st.session_state["Ch"] = carbohidratos
-    st.session_state["Gras"] = grasas
+                # Mostrar los valores
+                st.write(f"**Distribución de Macronutrientes - Objetivo: {objetivo.capitalize()}**")
+                st.write(f"Carbohidratos: {macronutrientes_dict['Carbohidratos (g)']}g")
+                st.write(f"Proteinas: {macronutrientes_dict['Proteinas (g)']}g")
+                st.write(f"Grasas: {macronutrientes_dict['Grasas (g)']}g")
+        except KeyError as e:
+                st.warning(f"No se pudieron calcular los macronutrientes para el objetivo '{objetivo}'. Error: {e}")
+                
+        st.write(utils.recomendaciones(st.session_state["prediccion_ob"]))
 
-    # Asegúrate de que los valores son correctos
-    st.write(f"Carbohidratos: {carbohidratos}g")
-    st.write(f"Proteínas: {proteinas}g")
-    st.write(f"Grasas: {grasas}g")
-
-
+    
 if opcion == "Gráficos y Análisis":
     st.title("📈 Análisis Visual")
+    try:
+        datos = {
+            "Categoría": ["Kcal totales", "Kcal ejercicio", "Kcal sin ejercicio"],
+            "Kcal": [st.session_state["kcal_rec"], st.session_state["kcal_ejer"], st.session_state["kcal_rec"] - st.session_state["kcal_ejer"]]
+        }
+        fig = px.bar(datos, x="Categoría", y="Kcal", color="Categoría",
+                    color_discrete_sequence=["#ff9a9e", "#fad0c4", "#a18cd1"],
+                    title="Distribución del Gasto Calórico")
+        st.plotly_chart(fig)
+    #-------------------------
+        objetivos=st.session_state["objetivos"]
 
-    datos = {
-        "Categoría": ["Kcal totales", "Kcal ejercicio", "Kcal sin ejercicio"],
-        "Kcal": [st.session_state["kcal_rec"], st.session_state["kcal_ejer"], st.session_state["kcal_rec"] - st.session_state["kcal_ejer"]]
-    }
-    fig = px.bar(datos, x="Categoría", y="Kcal", color="Categoría",
-                color_discrete_sequence=["#ff9a9e", "#fad0c4", "#a18cd1"],
-                title="Distribución del Gasto Calórico")
-    st.plotly_chart(fig)
-#-------------------------
-    datos1 = {
-        "Macronutrientes": ["CH", "Proteinas", "Grasas"],
-        "Gramos": [st.session_state["Ch"], st.session_state["Prot"], st.session_state["Gras"]]
-    }
-    fig1 = px.bar(datos1, x="Macronutrientes", y="Gramos", color="Macronutrientes",
-                color_discrete_sequence=["#ff9a9e", "#fad0c4", "#a18cd1"],
-                title="Distribución de Macronutrientes")
-    st.plotly_chart(fig1)
+        for i, objetivo in enumerate(objetivos):
+            try:
+                # Obtener los macronutrientes guardados en session_state
+                macros = st.session_state.get(f"macros_{objetivo}", {})
 
+                # Crear el diccionario de datos para la gráfica
+                datos1 = {
+                    "Macronutrientes": ["CH", "Proteinas", "Grasas"],
+                    "Gramos": [
+                        macros.get("Carbohidratos (g)", 0),
+                        macros.get("Proteinas (g)", 0),
+                        macros.get("Grasas (g)", 0)
+                    ]
+                }
+
+                # Crear la gráfica
+                fig1 = px.pie(
+                    datos1,
+                    names="Macronutrientes",
+                    values="Gramos",
+                    color="Macronutrientes",
+                    title=f"Distribución de Macronutrientes - Objetivo: {objetivo.capitalize()}",
+                    color_discrete_sequence=["#ff9a9e", "#fad0c4", "#a18cd1"]
+                )
+
+                # Mostrar la gráfica en la columna correspondiente
+                st.plotly_chart(fig1, use_container_width=True)
+
+            except KeyError:
+                st.warning(f"No se pudieron obtener los datos para el objetivo: {objetivo}.")
+        # datos1 = {
+        #     "Macronutrientes": ["CH", "Proteinas", "Grasas"],
+        #     "Gramos": [st.session_state["Ch"], st.session_state["Prot"], st.session_state["Gras"]]
+        # }
+        # fig1 = px.bar(datos1, x="Macronutrientes", y="Gramos", color="Macronutrientes",
+        #             color_discrete_sequence=["#ff9a9e", "#fad0c4", "#a18cd1"],
+        #             title="Distribución de Macronutrientes")
+        # st.plotly_chart(fig1)
+    except KeyError:
+        st.warning("Si los campos anteriores están vacíos, no se pueden visualizar las gráficas.")
 

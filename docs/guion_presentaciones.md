@@ -1,50 +1,75 @@
-Para preparar una presentación técnica y una de negocio sobre tu aplicación con los índices mencionados y los modelos de Machine Learning (ML) que has desarrollado, sigue estas pautas estructuradas para cada tipo de audiencia:
+Para estructurar ambas presentaciones de manera efectiva, puedes enfocarlas de la siguiente manera:
 
-### Presentación Técnica (para otros equipos de Data Science)
+---
 
-1. **Contextualización Técnica**:
-   - **Problema**: Explica que la app ayuda a los usuarios a gestionar su salud mediante el cálculo del IMC, estimación de calorías quemadas en ejercicio, recomendaciones diarias de calorías, y análisis gráfico de su progreso.
-   - **Datos**: Describe el conjunto de datos utilizado, incluyendo fuentes, tamaño, y las variables clave como peso, altura, edad, género, nivel de actividad física, etc.
-   - **ML aplicado**: Menciona que has utilizado modelos supervisados y no supervisados, destacando los modelos polinómicos de grado dos tras evaluar otros como PCA, RandomForest, y redes neuronales.
+## **1. Presentación Técnica** (Público: desarrolladores, científicos de datos, ingenieros)
 
-2. **Limpieza y transformaciones en los datos**:
-   - **Limpieza**: Detalla cómo manejaste los valores faltantes, outliers, y la normalización de datos.
-   - **Feature Engineering**: Explica las transformaciones aplicadas, como la creación de nuevas variables (ej. categorías de IMC) y la selección de características relevantes.
+🔹 **Objetivo:** Explicar el funcionamiento interno de la aplicación, los modelos utilizados y la metodología empleada para el desarrollo del proyecto.
 
-3. **Enfoque en la metodología**:
-   - **Modelos**: Describe por qué elegiste los modelos polinómicos de grado dos, mencionando pruebas de otros modelos y la justificación basada en métricas de rendimiento.
-   - **Validación**: Explica el uso de técnicas de validación cruzada y cómo se ajustaron los hiperparámetros.
+🔹 **Estructura:**
+1. **Introducción** (2-3 min)  
+   - Breve resumen del problema que se quiere resolver.  
+   - Explicación del flujo de la aplicación.
 
-4. **Resultados y métricas de evaluación**:
-   - **Métricas**: Presenta las métricas utilizadas (ej. RMSE, MAE para regresión; precisión, recall para clasificación) y los resultados obtenidos.
-   - **Análisis**: Discute la importancia de las variables y cómo contribuyen al modelo.
+2. **Modelos de Machine Learning** (5-7 min)  
+   - **Modelo de IMC**: Explicación de la regresión lineal utilizada.  
+   - **Estimación del porcentaje de grasa corporal**: Relación con el IMC y otros factores.  
+   - **Modelo de calorías quemadas**: Variables utilizadas y su impacto en la predicción.  
+   - **Métricas de evaluación**: MAE, MSE, pérdida y resultados obtenidos.  
 
-5. **Discusión sobre limitaciones y mejoras**:
-   - **Limitaciones**: Sé claro sobre las limitaciones del modelo, como la dependencia de la calidad de los datos de entrada.
-   - **Mejoras**: Sugiere posibles mejoras, como la incorporación de más datos o el uso de técnicas avanzadas de regularización.
+3. **Preprocesamiento y Datos** (5 min)  
+   - Fuentes de datos (sintéticos y transformaciones realizadas).  
+   - Procesamiento de datos: normalización, codificación de variables categóricas.  
+   - Validación y limpieza de datos.  
 
-### Presentación de Negocio
+4. **Desarrollo y Tecnologías** (4-5 min)  
+   - Stack tecnológico: Python, Streamlit, Scikit-learn, Pandas.  
+   - Cómo se implementó la aplicación.  
+   - Uso de Pickle para guardar y cargar modelos.  
 
-1. **Contextualización del problema**:
-   - **Problema**: Explica de manera sencilla cómo la app ayuda a los usuarios a mejorar su salud mediante el seguimiento y recomendaciones personalizadas.
-   - **Importancia**: Usa analogías para ilustrar la importancia de un seguimiento preciso de la salud.
+5. **Desafíos y Mejoras Futuras** (3 min)  
+   - Retos en el desarrollo de los modelos.  
+   - Plan para integrar el modelo no supervisado para la recomendación de menús.  
 
-2. **Explicación del valor del modelo**:
-   - **Valor**: Destaca cómo el modelo de ML personaliza las recomendaciones, mejorando la experiencia del usuario y potencialmente reduciendo costos en salud.
+6. **Demo (opcional) o Preguntas** (3-5 min)  
+   - Mostrar el flujo de la aplicación en tiempo real.  
+   - Espacio para resolver dudas técnicas.  
 
-3. **Beneficios y aplicaciones prácticas**:
-   - **Beneficios**: Describe cómo la app puede ser usada diariamente por los usuarios para tomar decisiones informadas sobre su salud.
-   - **Casos de uso**: Ejemplifica con situaciones reales donde la app puede ser especialmente útil.
+📌 **Enfoque:** Más código, métricas y justificación de decisiones técnicas.  
 
-4. **Visualización de resultados**:
-   - **Gráficos**: Usa gráficos claros y tablas para mostrar cómo la app beneficia al usuario, evitando jerga técnica.
+---
 
-5. **Demo de la solución**:
-   - **Demo**: Realiza una demostración en vivo de la app, mostrando su facilidad de uso y cómo se integra el modelo de ML en la experiencia del usuario.
+## **2. Presentación de Negocio** (Público: inversionistas, directivos, clientes potenciales)
 
-### Preparación para Preguntas
+🔹 **Objetivo:** Mostrar el valor del proyecto, su impacto en el mercado y las oportunidades de negocio.
 
-- **Técnica**: Prepárate para discutir detalles técnicos como la selección de algoritmos, ajuste de hiperparámetros, y manejo de datos.
-- **Negocio**: Anticipa preguntas sobre la implementación, costos, escalabilidad, y alineación con objetivos estratégicos.
+🔹 **Estructura:**
+1. **Introducción y Problema** (2-3 min)  
+   - Breve historia del problema de la obesidad y la importancia de controlar el peso.  
+   - Datos clave sobre la importancia de la gestión del peso y la actividad física.  
 
-Ambas presentaciones deben ser claras, bien estructuradas, y adaptadas a la audiencia. Asegúrate de practicar y ajustar el contenido según el feedback recibido durante los ensayos.
+2. **Solución: Nuestra Aplicación** (4-5 min)  
+   - Cómo ayuda la aplicación a los usuarios.  
+   - Flujo simple: el usuario ingresa datos y recibe recomendaciones personalizadas.  
+   - Diferenciación respecto a otras soluciones en el mercado.  
+
+3. **Mercado y Oportunidades** (5-6 min)  
+   - ¿A quién está dirigido el producto? (usuarios fitness, médicos, empresas de salud).  
+   - Tamaño del mercado y tendencias en tecnología de salud.  
+   - Competencia y ventajas competitivas de nuestro producto.  
+
+4. **Modelo de Negocio** (5 min)  
+   - ¿Cómo se monetiza? (suscripción, licencias, integración con gimnasios o apps de salud).  
+   - Estrategias de crecimiento: marketing, colaboraciones con influencers, etc.  
+   - Potencial de escalabilidad: integración de IA avanzada, expansión a otras funciones.  
+
+5. **Roadmap y Futuro** (3-4 min)  
+   - Próximos pasos: integración del modelo de menú, más precisión en predicciones.  
+   - Posibilidad de agregar personalización avanzada con más datos.  
+
+6. **Cierre e Inversión** (3-5 min)  
+   - Impacto del producto en la salud de los usuarios.  
+   - Llamado a la acción: búsqueda de inversión, alianzas estratégicas o clientes.  
+   - Preguntas y networking.  
+
+📌 **Enfoque:** Más negocio, impacto y viabilidad comercial.  

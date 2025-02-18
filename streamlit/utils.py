@@ -1,5 +1,23 @@
 from sklearn.metrics import mean_squared_error,mean_absolute_error
 import seaborn as sns
+
+def label(imc):
+    if imc==0:
+        return 'Insufficient_Weight'
+    elif imc ==3:
+        return 'Normal_Weight'
+    elif  imc ==2:
+        return 'Overweight_Level_I'
+    elif imc ==1:
+        return 'Overweight_Level_II'
+    elif  imc ==4:
+        return 'Obesity_Type_I'
+    elif imc ==5:
+        return 'Obesity_Type_II'
+    else:
+        return 'Obesity_Type_III'
+    
+#--------------------------------------------------------------
 def clasificar_bmi(imc):
     if imc < 18.5:
         return 'Insufficient_Weight'
