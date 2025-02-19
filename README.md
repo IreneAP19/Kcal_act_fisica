@@ -2,7 +2,7 @@
 ![Texto alternativo](img/lemur.png)
 # 📊 Aplicación de Cálculo de IMC y Calorías Quemadas
 
-Este proyecto es una aplicación desarrollada con Streamlit que permite calcular el índice de masa corporal (IMC), el porcentaje de grasa corporal y estimar las calorías quemadas durante el ejercicio. Además, recomienda la ingesta calórica diaria según los objetivos del usuario.
+Este proyecto de **Machine Learning** tiene como finalidad crear una aplicación desarrollada con Streamlit que permite calcular el índice de masa corporal (IMC), el porcentaje de grasa corporal y estimar las calorías quemadas durante el ejercicio. Además, recomienda la ingesta calórica diaria según los objetivos del usuario.
 
 ---
 
