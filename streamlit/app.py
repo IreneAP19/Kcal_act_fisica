@@ -134,13 +134,13 @@ if opcion == "Inicio":
         st.write(' ')
 
     with col2:
-        st.image("../img/My_Healthy_Maki.png")
+        st.image("../img/nombre.png")
 
     with col3:
         st.write(' ')
     st.title("Bienvenido a la Calculadora de IMC y Calorías Diarias")
     st.image("../img/lemur.png", width=250)
-    st.write("Esta aplicación te ayudará a calcular tu Índice de Masa Corporal (IMC) y la cantidad de calorías diarias recomendadas según tu nivel de actividad. 💪")
+    st.write("Esta aplicación te ayudará a calcular tu Índice de Masa Corporal (IMC) y la cantidad de calorías diarias recomendadas según tu nivel de actividad. 💪 Por último, Maki te dará algunas recomendaciones según tu objetivo")
 
 
 elif opcion == "Cálculo de IMC":
@@ -307,6 +307,7 @@ elif opcion == "Cálculo de Calorías de Ejercicio":
     if st.button("Predecir kcal ejer", key="predecir kcal ejer"):
         if Session_Duration == 0:
             st.warning("Por favor, ingresa una duración válida para la actividad física.")
+            
         else:
             # Crear nueva entrada para el segundo modelo
                                     
@@ -323,19 +324,35 @@ elif opcion == "Cálculo de Calorías de Ejercicio":
 
                 # Mostrar el resultado
                 st.write(f"🔥 **Predicción calorías gastadas en actividad física:** {round(prediccion_final[0])}")
-                
+                if Workout_Type == "Yoga":
+                    st.image("../img/yoga.png", width=250)
+                elif Workout_Type in ["HIIT", "Cardio"]:
+                    st.image("../img/hitt.png", width=250)
+                else:
+                    st.image("../img/fuerza.png", width=250)
+
                 st.success("Datos guardados en la sesión correctamente.")
+
             except Exception as e:
                 st.error(f"Error en la predicción: {e}")
 
 elif opcion == "Estimación de kcal diarias y Recomendaciones":
-    st.title("🥭 Kcal recomendadas y Macronutrientes")
+    
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.title("🥭 Kcal recomendadas y Macronutrientes")
+
+    with col2:
+        st.image("../img/comida.png", width=200)
+
    
     required_keys = ["male", "weight", "height", "age", "kcal_ejer", "prediccion_ob"]
     missing_keys = [key for key in required_keys if key not in st.session_state]
 
     if missing_keys:
-        st.warning(f"Faltan los siguientes datos: {', '.join(missing_keys)}. Por favor, complete los campos anteriores.")
+        st.image("../img/warming.png", width=250)
+        st.warning(f"Faltan datos por rellenar. Por favor, complete los campos anteriores.")
     else:
         try:
             objetivos=utils.objetivo(st.session_state["prediccion_ob"])
@@ -367,53 +384,61 @@ elif opcion == "Estimación de kcal diarias y Recomendaciones":
         except KeyError as e:
                 st.warning(f"No se pudieron calcular los macronutrientes para el objetivo '{objetivo}'. Error: {e}")
                 
-        st.write(utils.recomendaciones(st.session_state["prediccion_ob"]))
-
+        recomendaciones = utils.recomendaciones(st.session_state["prediccion_ob"])
+        st.write(recomendaciones)
     
 if opcion == "Gráficos y Análisis":
     st.title("📈 Análisis Visual")
-    try:
-        datos = {
-            "Categoría": ["Kcal totales", "Kcal ejercicio", "Kcal sin ejercicio"],
-            "Kcal": [st.session_state["kcal_rec"], st.session_state["kcal_ejer"], st.session_state["kcal_rec"] - st.session_state["kcal_ejer"]]
-        }
-        fig = px.bar(datos, x="Categoría", y="Kcal", color="Categoría",
-                    color_discrete_sequence=["#ff9a9e", "#fad0c4", "#a18cd1"],
-                    title="Distribución del Gasto Calórico")
-        st.plotly_chart(fig)
-    #-------------------------
-        objetivos=st.session_state["objetivos"]
+    required_keys = ["male", "weight", "height", "age", "kcal_ejer", "prediccion_ob"]
+    missing_keys = [key for key in required_keys if key not in st.session_state]
 
-        for i, objetivo in enumerate(objetivos):
-            try:
-                # Obtener los macronutrientes guardados en session_state
-                macros = st.session_state.get(f"macros_{objetivo}", {})
+    if missing_keys:
+        st.image("../img/warming.png", width=250)
+        st.warning(f"Faltan datos por rellenar. Por favor, complete los campos anteriores.")
+    else:
+        try:
+            datos = {
+                "Categoría": ["Kcal totales", "Kcal ejercicio", "Kcal sin ejercicio"],
+                "Kcal": [st.session_state["kcal_rec"], st.session_state["kcal_ejer"], st.session_state["kcal_rec"] - st.session_state["kcal_ejer"]]
+            }
+            fig = px.bar(datos, x="Categoría", y="Kcal", color="Categoría",
+                        color_discrete_sequence=["#ff9a9e", "#fad0c4", "#a18cd1"],
+                        title="Distribución del Gasto Calórico")
+            st.plotly_chart(fig)
+        #-------------------------
+            objetivos=st.session_state["objetivos"]
 
-                # Crear el diccionario de datos para la gráfica
-                datos1 = {
-                    "Macronutrientes": ["CH", "Proteinas", "Grasas"],
-                    "Gramos": [
-                        macros.get("Carbohidratos (g)", 0),
-                        macros.get("Proteinas (g)", 0),
-                        macros.get("Grasas (g)", 0)
-                    ]
-                }
+            for i, objetivo in enumerate(objetivos):
+                try:
+                    # Obtener los macronutrientes guardados en session_state
+                    macros = st.session_state.get(f"macros_{objetivo}", {})
 
-                # Crear la gráfica
-                fig1 = px.pie(
-                    datos1,
-                    names="Macronutrientes",
-                    values="Gramos",
-                    color="Macronutrientes",
-                    title=f"Distribución de Macronutrientes - Objetivo: {objetivo.capitalize()}",
-                    color_discrete_sequence=["#ff9a9e", "#fad0c4", "#a18cd1"]
-                )
+                    # Crear el diccionario de datos para la gráfica
+                    datos1 = {
+                        "Macronutrientes": ["CH", "Proteinas", "Grasas"],
+                        "Gramos": [
+                            macros.get("Carbohidratos (g)", 0),
+                            macros.get("Proteinas (g)", 0),
+                            macros.get("Grasas (g)", 0)
+                        ]
+                    }
 
-                # Mostrar la gráfica en la columna correspondiente
-                st.plotly_chart(fig1, use_container_width=True)
+                    # Crear la gráfica
+                    fig1 = px.pie(
+                        datos1,
+                        names="Macronutrientes",
+                        values="Gramos",
+                        color="Macronutrientes",
+                        title=f"Distribución de Macronutrientes - Objetivo: {objetivo.capitalize()}",
+                        color_discrete_sequence=["#ff9a9e", "#fad0c4", "#a18cd1"]
+                    )
 
-            except KeyError:
-                st.warning(f"No se pudieron obtener los datos para el objetivo: {objetivo}.")
+                    # Mostrar la gráfica en la columna correspondiente
+                    st.plotly_chart(fig1, use_container_width=True)
+                    
+
+                except KeyError:
+                    st.warning(f"No se pudieron obtener los datos para el objetivo: {objetivo}.")
         # datos1 = {
         #     "Macronutrientes": ["CH", "Proteinas", "Grasas"],
         #     "Gramos": [st.session_state["Ch"], st.session_state["Prot"], st.session_state["Gras"]]
@@ -422,6 +447,7 @@ if opcion == "Gráficos y Análisis":
         #             color_discrete_sequence=["#ff9a9e", "#fad0c4", "#a18cd1"],
         #             title="Distribución de Macronutrientes")
         # st.plotly_chart(fig1)
-    except KeyError:
-        st.warning("Si los campos anteriores están vacíos, no se pueden visualizar las gráficas.")
+            st.image("../img/final.png", width=250)
+        except KeyError:
+            st.warning("Si los campos anteriores están vacíos, no se pueden visualizar las gráficas.")
 
