@@ -15,29 +15,7 @@ Este proyecto es una aplicación desarrollada con Streamlit que permite calcular
 
 ---
 
-📂 tu-repositorio
-│-- 📁 img/                # Imágenes usadas en la app
-│-- 📁 models/             # Modelos de Machine Learning
-│-- 📁 data/               # Datos utilizados en la app y de prueba
-    |--raw                 # Datos sin procesar
-    |-- train/test         # Datos procesados
-│-- 📁 src/ 
-    │-- 📄 train.py        # Entreno de los modelos finales     
-    │-- 📄 limieza.py      # EDA
-    │-- 📄 utils.py        #Funciones necesarias
-│-- 📁 notebooks/ 
-    │-- 📄 clasificacion.ipynb          
-    │-- 📄 calcular kcla ejer.ipynb 
-    │-- 📄 calcular IMC.ipynb 
-│-- 📁 docs/ 
-    │-- 📄 memoria         
-    │-- 📄 presentaciones 
-│-- 📁 streamlit/ 
-    │-- 📄 app.py          # Archivo principal de la aplicación
-    │-- 📄 utils.py        # Funciones auxiliares
-│-- 📄 requirements.txt    # Dependencias del proyecto
-│-- 📄 README.md           # Este archivo
-
+tu-repositorio/ │ ├── img/ # Imágenes usadas en la app │ ├── models/ # Modelos de Machine Learning │ ├── data/ # Datos utilizados en la app y de prueba │ ├── raw # Datos sin procesar │ └── train/test # Datos procesados │ ├── src/ # Archivos fuente │ ├── train.py # Entrenamiento de los modelos finales │ ├── limpieza.py # Análisis exploratorio de datos (EDA) │ └── utils.py # Funciones necesarias │ ├── notebooks/ # Notebooks para experimentación │ ├── clasificacion.ipynb │ ├── calcular_kcla_ejer.ipynb │ └── calcular_IMC.ipynb │ ├── docs/ # Documentación │ ├── memoria │ └── presentaciones │ ├── streamlit/ # Archivos para la aplicación de Streamlit │ ├── app.py # Archivo principal de la aplicación │ └── utils.py # Funciones auxiliares │ ├── requirements.txt # Dependencias del proyecto ├── README.md # Este archivo
 ## Modelos Utilizados
 
 - **Modelos de Regresión Lineal para IMC y Calorías Quemadas**: Este modelo predice el IMC, el porcentaje de grasa corporal y las calorías quemadas en función de los datos proporcionados por el usuario.
