@@ -1,4 +1,4 @@
-![Texto alternativo](img/lemur.png)
+
 
 # 📊 Aplicación de Cálculo de IMC y Calorías Quemadas
 
@@ -16,18 +16,31 @@ Este proyecto es una aplicación desarrollada con Streamlit que permite calcular
 ---
 
 📂 tu-repositorio
+
   │-- 📁 img/                # Imágenes usadas en la app 
+  
   │-- 📁 models/             # Modelos de Machine Learning 
+
   │-- 📁 data/               # Datos utilizados en la app y de prueba 
+  
       |--raw                 # Datos sin procesar 
+      
       |-- train/test         # Datos procesados 
+      
   │-- 📁 src/ 
+  
       │-- 📄 train.py        # Entreno de los modelos finales
+      
       │-- 📄 limieza.py      # EDA 
+      
       │-- 📄 utils.py        #Funciones necesarias
-  │-- 📁 notebooks/ 
+      
+  │-- 📁 notebooks/
+  
       │-- 📄 clasificacion.ipynb
+      
       │-- 📄 calcular kcla ejer.ipynb 
+      
       │-- 📄 calcular IMC.ipynb 
       
   │-- 📁 docs/ 
@@ -57,3 +70,4 @@ Este proyecto es una aplicación desarrollada con Streamlit que permite calcular
 - **Pandas**: Para la manipulación de datos.
 - **Numpy**: Para cálculos numéricos.
 
+![Texto alternativo](img/final.png)
