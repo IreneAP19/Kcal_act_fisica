@@ -128,6 +128,13 @@ with st.sidebar:
 
 
 if opcion == "Inicio":
+    image_path="../img/My_Healthy_Maki.png"
+    st.markdown(
+    f"""
+    <div style="text-align: center;">
+        <img src="{image_path}" width="250">
+    </div>
+    """, unsafe_allow_html=True)
     st.title("Bienvenido a la Calculadora de IMC y Calorías Diarias")
     st.image("../img/lemur.png", width=250)
     st.write("Esta aplicación te ayudará a calcular tu Índice de Masa Corporal (IMC) y la cantidad de calorías diarias recomendadas según tu nivel de actividad. 💪")
