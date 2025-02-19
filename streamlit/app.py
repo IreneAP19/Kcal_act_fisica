@@ -39,7 +39,7 @@ modelo = cargar_modelo()
 pol_2 = cargar_polynomial_features()
 pol_2_ob = cargar_polynomial_features_ob()
 import streamlit as st
-from streamlit_option_menu import option_menu  # Asegúrate de tener instalada la librería `streamlit-option-menu`
+from streamlit_option_menu import option_menu  
 
 def set_background():
     st.markdown(
@@ -69,12 +69,12 @@ styles = {
     # Estilo del menú de la barra lateral
     "menu": {
         "color": "white",
-        "background-color": "#D8BFD8",  # Fondo sólido del menú (un tono oscuro morado)
+        "background-color": "#D8BFD8",  # Fondo sólido del menú
         "font-size": "16px",
     },
     # Estilo de la opción seleccionada en el menú
     "menu_selected": {
-        "background-color": "#D8BFD8",  # Color morado para la opción seleccionada
+        "background-color": "#D8BFD8",  
         "color": "white",
     },
     # Estilo de los iconos del menú
@@ -84,13 +84,13 @@ styles = {
     },
     # Estilo de las barras de selección (sliders, inputs, etc.)
     "input": {
-        "background-color": "#D8BFD8",  # Rosa para las barras de selección
+        "background-color": "#D8BFD8", 
         "color": "white",
         "border-radius": "5px",
     },
     # Estilo para los botones de predicción (en tonos morados)
     "button": {
-        "background-color": "#E6E6FA",  # Color morado
+        "background-color": "#E6E6FA", 
         "color": "white",
         "padding": "10px 20px",
         "border-radius": "5px",
@@ -128,13 +128,16 @@ with st.sidebar:
 
 
 if opcion == "Inicio":
-    image_path="../img/My_Healthy_Maki.png"
-    st.markdown(
-    f"""
-    <div style="text-align: center;">
-        <img src="{image_path}" width="250">
-    </div>
-    """, unsafe_allow_html=True)
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.write(' ')
+
+    with col2:
+        st.image("../img/My_Healthy_Maki.png")
+
+    with col3:
+        st.write(' ')
     st.title("Bienvenido a la Calculadora de IMC y Calorías Diarias")
     st.image("../img/lemur.png", width=250)
     st.write("Esta aplicación te ayudará a calcular tu Índice de Masa Corporal (IMC) y la cantidad de calorías diarias recomendadas según tu nivel de actividad. 💪")
@@ -149,7 +152,7 @@ elif opcion == "Cálculo de IMC":
     #frecuencia_ejercicio = st.number_input("Frecuencia de ejercicio (días/semana):", min_value=0, max_value=7, value=3)
     family_with_overweight=st.selectbox("¿Antecedentes familiares de obesidad?:", options=["Si", "No"])
     opciones_alcohol = {
-        "No": 0,
+        "Nunca": 0,
         "A veces": 1,
         "Mucha fecuencia": 2,
         "Todos los dias": 3
@@ -188,8 +191,8 @@ elif opcion == "Cálculo de IMC":
         st.write(f"**Porcentaje estimado de grasa corporal:** {porcentaje_grasa:.2f}%")
 
         
-        prediccion_tipo_ini = modelo_ob_cop.predict(entrada_ob)
-        prediccion_tipo = round(prediccion_tipo_ini[0])
+        prediccion_tipo = modelo_ob_cop.predict(entrada_ob)
+        # prediccion_tipo = round(prediccion_tipo_ini[0])
         predic_tipo=utils.label(prediccion_tipo)
         st.write(f"**Clasificación:** {predic_tipo}")
 
@@ -241,7 +244,7 @@ elif opcion == "Cálculo de IMC":
             <div class="arrow">↑</div>
         </div>
         """, unsafe_allow_html=True)
-        st.session_state["prediccion_ob"] = Weight/(Height**2)
+        st.session_state["prediccion_ob"] =prediccion_ob[0]
         st.session_state["male"] = Male_valor
         st.session_state["weight"] = Weight
         st.session_state["height"] = Height
@@ -251,16 +254,45 @@ elif opcion == "Cálculo de IMC":
 elif opcion == "Cálculo de Calorías de Ejercicio":
     st.title("🔥 Cálculo de Calorías de Ejercicio")
     
-    tipo_ejer = {
-        'Yoga': 0, 
-        'Strength': 1, 
-        'Cardio': 2, 
-        'HIIT': 3
-    }
-    Workout_Type = st.selectbox("¿Qué ejercicio va a realizar?", tipo_ejer.keys())
-    Workout_Type_value = tipo_ejer[Workout_Type]  # Convertir a valor numérico
+    tipo_ejer = ['Yoga', 'Strength', 'Cardio', 'HIIT']
+
+    Workout_Type = st.selectbox("¿Qué ejercicio va a realizar?", tipo_ejer)
+    # Crear un vector con ceros
+    Workout_Type_encoded = np.zeros(len(tipo_ejer))
+
+    # Activar la posición correspondiente
+    Workout_Type_encoded[tipo_ejer.index(Workout_Type)] = 1
+
     tiempo_str = st.text_input("Duración de la actividad física (Ej: 1h 30min):")
     Session_Duration = utils.convertir_tiempo_a_decimal(tiempo_str)
+
+    # frecuencia = {
+    #     '1-2 días': 2, 
+    #     '3-4 días': 3, 
+    #     '4-5 días': 4, 
+    #     '6-7 días': 5
+    # }
+    # tipo_frec=[2,3,4,5]
+    # W_Frequency = st.selectbox("¿Con qué frecuencia lo va a realizar?", frecuencia.keys())
+    # Workout_Frequency = frecuencia[W_Frequency]  # Convertir a valor numérico
+    # # Crear un vector con ceros
+    # Workout_Frec_encoded = np.zeros(len(tipo_frec))
+
+    # # Activar la posición correspondiente
+    # Workout_Frec_encoded[tipo_frec.index(Workout_Frequency)] = 1
+
+    # nivel = {
+    #     'Nuevo/a': 1, 
+    #     'Algo he hecho antes': 2, 
+    #     'Soy un experto/a': 3
+    # }
+    # tipo_nivel=[1,2,3]
+    # W_level = st.selectbox("¿Ha practicado antes este ejercicio?", nivel.keys())
+    # Experience_Level = nivel[W_level]  # Convertir a valor numérico
+    # Experience_Level_encoded = np.zeros(len(tipo_nivel))
+
+    # # Activar la posición correspondiente
+    # Experience_Level_encoded[tipo_nivel.index(Experience_Level)] = 1
 
     frecuencia = {
         '1-2 días': 2, 
@@ -271,14 +303,6 @@ elif opcion == "Cálculo de Calorías de Ejercicio":
     W_Frequency = st.selectbox("¿Con qué frecuencia lo va a realizar?", frecuencia.keys())
     Workout_Frequency = frecuencia[W_Frequency]  # Convertir a valor numérico
 
-    nivel = {
-        'Nuevo/a': 1, 
-        'Algo he hecho antes': 2, 
-        'Soy un experto/a': 3
-    }
-    W_level = st.selectbox("¿Ha practicado antes este ejercicio?", nivel.keys())
-    Experience_Level = nivel[W_level]  # Convertir a valor numérico
-
     # Botón para predecir calorías de ejercicio
     if st.button("Predecir kcal ejer", key="predecir kcal ejer"):
         if Session_Duration == 0:
@@ -286,7 +310,7 @@ elif opcion == "Cálculo de Calorías de Ejercicio":
         else:
             # Crear nueva entrada para el segundo modelo
                                     
-            entrada_kcal_ejer = np.array([[st.session_state["age"], st.session_state["weight"], st.session_state["height"], Session_Duration, st.session_state["porcentaje_grasa"], Workout_Frequency, Experience_Level, Workout_Type_value,st.session_state["male"], st.session_state["prediccion_ob"]]]).reshape(1, -1)
+            entrada_kcal_ejer = np.array([[st.session_state["age"], st.session_state["weight"], st.session_state["height"], Session_Duration, st.session_state["porcentaje_grasa"], *Workout_Type_encoded,st.session_state["male"], st.session_state["prediccion_ob"]]]).reshape(1, -1)
             entrada_kcal_pol2 = pol_2.transform(entrada_kcal_ejer)
 
             try:
@@ -307,7 +331,7 @@ elif opcion == "Cálculo de Calorías de Ejercicio":
 elif opcion == "Estimación de kcal diarias y Recomendaciones":
     st.title("🥭 Kcal recomendadas y Macronutrientes")
    
-    required_keys = ["male", "weight", "height", "freq_ejer", "age", "kcal_ejer", "prediccion_ob"]
+    required_keys = ["male", "weight", "height", "age", "kcal_ejer", "prediccion_ob"]
     missing_keys = [key for key in required_keys if key not in st.session_state]
 
     if missing_keys:

@@ -1,5 +1,6 @@
 from sklearn.metrics import mean_squared_error,mean_absolute_error
 import seaborn as sns
+import numpy as np
 
 def label(imc):
     if imc==0:
@@ -257,5 +258,12 @@ def recomendaciones(imc):
     - **Cardio:** 3-5 veces por semana (puede incluir HIIT y ejercicios aeróbicos).  
     - **Movilidad:** Yoga o estiramientos para evitar lesiones."""
 
-
+#--------------------------------------
+def predict_calories(exercise,exercise_options):
+    # Crear un array de ceros para One-Hot Encoding
+    input_data = np.zeros(len(exercise_options))  
+    index = exercise_options.index(exercise)  # Encontramos el índice correcto
+    input_data[index] = 1  # Activamos la categoría correcta
+    
+    return input_data
 
