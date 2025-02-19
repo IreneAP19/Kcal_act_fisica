@@ -60,7 +60,7 @@ Este proyecto de **Machine Learning** tiene como finalidad crear una aplicación
 ## Modelos Utilizados
 
 - **Modelos de Regresión Lineal para IMC y Calorías Quemadas**: Este modelo predice el IMC, el porcentaje de grasa corporal y las calorías quemadas en función de los datos proporcionados por el usuario.
-- **Modelos de Clasificación para Calorías Consumidas**: Predice la cantidad de calorías que el usuario debe consumir en función de sus objetivos y su clasificación de peso.
+- **Modelos de Clasificación**: Predice la categoria a la que el usuario pertenece en función a su IMC.
   
 ## Tecnologías y Herramientas
 
