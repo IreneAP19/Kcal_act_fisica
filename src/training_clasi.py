@@ -7,7 +7,7 @@ import seaborn as sns
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
-
+from sklearn.model_selection import cross_val_score
 
 df=pd.read_csv("../data/df_clasi.csv")
 
@@ -29,6 +29,12 @@ accuracy = accuracy_score(y_test, y_pred_reg)
 print(f'Accuracy: {accuracy:.4f}')
 
 conf_matrix = confusion_matrix(y_test, y_pred_reg)
+
+scores = cross_val_score(rnd_reg, X_train, y_train, cv=5, scoring='accuracy')
+
+# Mostrar resultados
+print("Accuracy en cada fold:", scores)
+print("Media del accuracy:", scores.mean())
 
 
 

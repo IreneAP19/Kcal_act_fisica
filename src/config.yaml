@@ -1,0 +1,57 @@
+model:
+  type: RandomForestRegressor
+  n_estimators: 200
+  max_leaf_nodes: 32
+  random_state: 42
+
+train_test_split:
+  test_size: 0.2
+  random_state: 42
+
+metrics:
+  - R2
+  - MAE
+  - MSE
+  - RMSE
+
+
+
+model:
+  type: RandomForestRegressor
+  n_estimators: 200
+  max_leaf_nodes: 32
+  random_state: 42
+
+polynomial_features:
+  degree: 2
+  include_bias: false
+
+linear_regression:
+  fit_intercept: true
+
+train_test_split:
+  test_size: 0.2
+  random_state: 42
+
+metrics:
+  - R2
+  - MAE
+  - MSE
+  - RMSE
+
+
+model:
+type: RandomForestClassifier
+n_estimators: 200
+max_leaf_nodes: 32
+random_state: 42
+
+train_test_split:
+test_size: 0.2
+random_state: 42
+
+metrics:
+- accuracy
+- confusion_matrix
+- classification_report
+
