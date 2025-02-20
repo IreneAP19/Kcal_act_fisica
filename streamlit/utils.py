@@ -172,91 +172,91 @@ def objetivo(imc):
 def recomendaciones(imc):
     if imc < 18.5:
         
-        return """**Objetivo Recomendable:** Ganar peso de manera saludable.
+        return """Objetivo Recomendable: Ganar peso de manera saludable.
 
-    **Nutrición:**  
+    Nutrición:  
     - Aumentar la ingesta calórica con alimentos nutritivos (unas 300 kcal diarias de las recomendadas como máximo para que sea progresivo).  
     - Incluir más proteínas (pollo, pescado, huevos, legumbres).  
     - Consumir grasas saludables (aguacate, frutos secos, aceite de oliva).  
     - Aumentar la frecuencia de comidas (5-6 al día).  
 
-    **Ejercicio recomendado:**  
-    - **Fuerza:** Priorizar entrenamiento con pesas para ganar masa muscular.  
-    - **Cardio:** Moderado, no excesivo, para no quemar demasiadas calorías.
+    Ejercicio recomendado:  
+    - Fuerza: Priorizar entrenamiento con pesas para ganar masa muscular.  
+    - Cardio: Moderado, no excesivo, para no quemar demasiadas calorías.
 
-**Objetivo Mantener Peso:** Mantener un estilo de vida saludable.
+Objetivo Mantener Peso: Mantener un estilo de vida saludable.
 
-    **Nutrición:**  
+    Nutrición:  
     - Balance entre proteínas, carbohidratos y grasas saludables.  
     - Evitar exceso de azúcares y ultraprocesados.  
     - Hidratarse bien (mínimo 2L de agua al día).  
 
-    **Ejercicio recomendado:**  
-    - **Fuerza:** 2-3 veces por semana para mantener tono muscular.  
-    - **Cardio:** 3-5 veces por semana (puede incluir HIIT y ejercicios aeróbicos).  
-    - **Movilidad:** Yoga o estiramientos para evitar lesiones."""
+    Ejercicio recomendado:  
+    - Fuerza: 2-3 veces por semana para mantener tono muscular.  
+    - Cardio: 3-5 veces por semana (puede incluir HIIT y ejercicios aeróbicos).  
+    - Movilidad: Yoga o estiramientos para evitar lesiones."""
 
     elif 18.5 <= imc < 25:
-        return """**Objetivo Recomendable:** Mantener un estilo de vida saludable.
+        return """Objetivo Recomendable: Mantener un estilo de vida saludable.
 
-    **Nutrición:**  
+    Nutrición:  
     - Balance entre proteínas, carbohidratos y grasas saludables.  
     - Evitar exceso de azúcares y ultraprocesados.  
     - Hidratarse bien (mínimo 2L de agua al día).  
 
-    **Ejercicio recomendado:**  
-    - **Fuerza:** 2-3 veces por semana para mantener tono muscular.  
-    - **Cardio:** 3-5 veces por semana (puede incluir HIIT y ejercicios aeróbicos).  
-    - **Movilidad:** Yoga o estiramientos para evitar lesiones.
+    Ejercicio recomendado:  
+    - Fuerza: 2-3 veces por semana para mantener tono muscular.  
+    - Cardio: 3-5 veces por semana (puede incluir HIIT y ejercicios aeróbicos).  
+    - Movilidad: Yoga o estiramientos para evitar lesiones.
 
-**Objetivo:** Ganar peso de manera saludable.
+Objetivo: Ganar peso de manera saludable.
 
-    **Nutrición:**  
+    Nutrición:  
     - Aumentar la ingesta calórica con alimentos nutritivos (unas 300 kcal diarias de las recomendadas como máximo para que sea progresivo).  
     - Incluir más proteínas (pollo, pescado, huevos, legumbres).  
     - Consumir grasas saludables (aguacate, frutos secos, aceite de oliva).  
     - Aumentar la frecuencia de comidas (5-6 al día).  
 
-    **Ejercicio recomendado:**  
-    - **Fuerza:** Priorizar entrenamiento con pesas para ganar masa muscular.  
-    - **Cardio:** Moderado, no excesivo, para no quemar demasiadas calorías.
+    Ejercicio recomendado:  
+    - Fuerza: Priorizar entrenamiento con pesas para ganar masa muscular.  
+    - Cardio: Moderado, no excesivo, para no quemar demasiadas calorías.
 
-**Objetivo :** Reducir peso de forma progresiva y saludable.
+Objetivo : Reducir peso de forma progresiva y saludable.
 
-    **Nutrición:**  
+    Nutrición:  
     - Mantener un déficit calórico controlado (-300 kcal diarias de las recomendadas como máximo).  
     - Aumentar el consumo de vegetales, proteínas magras y fibra.  
     - Reducir ultraprocesados, refrescos y azúcares añadidos.  
 
-    **Ejercicio recomendado:**  
-    - **Cardio:** Priorizar ejercicios aeróbicos de bajo impacto (caminar, nadar, bicicleta).  
-    - **Fuerza:** Fundamental para preservar masa muscular mientras se pierde grasa.  
-    - **HIIT:** Incluir sesiones cortas y progresivas según la condición física."""
+    Ejercicio recomendado:  
+    - Cardio: Priorizar ejercicios aeróbicos de bajo impacto (caminar, nadar, bicicleta).  
+    - Fuerza: Fundamental para preservar masa muscular mientras se pierde grasa.  
+    - HIIT: Incluir sesiones cortas y progresivas según la condición física."""
 
     else:
-        return """**Objetivo Recomendable:** Reducir peso de forma progresiva, saludable y controlada.
+        return """Objetivo Recomendable: Reducir peso de forma progresiva, saludable y controlada.
 
-    **Nutrición:**  
+    Nutrición:  
     - Mantener un déficit calórico controlado (-300 kcal diarias de las recomendadas como máximo).  
     - Aumentar el consumo de vegetales, proteínas magras y fibra.  
     - Reducir ultraprocesados, refrescos y azúcares añadidos.  
 
-    **Ejercicio recomendado:**  
-    - **Cardio:** Priorizar ejercicios aeróbicos de bajo impacto (caminar, nadar, bicicleta).  
-    - **Fuerza:** Fundamental para preservar masa muscular mientras se pierde grasa.  
-    - **HIIT:** Incluir sesiones cortas y progresivas según la condición física.
+    Ejercicio recomendado: 
+    - Cardio: Priorizar ejercicios aeróbicos de bajo impacto (caminar, nadar, bicicleta).  
+    - Fuerza: Fundamental para preservar masa muscular mientras se pierde grasa.  
+    - HIIT: Incluir sesiones cortas y progresivas según la condición física.
 
-**Objetivo:** Mantener un estilo de vida saludable.
+Objetivo: Mantener un estilo de vida saludable.
 
-    **Nutrición:**  
+    Nutrición:  
     - Balance entre proteínas, carbohidratos y grasas saludables.  
     - Evitar exceso de azúcares y ultraprocesados.  
     - Hidratarse bien (mínimo 2L de agua al día).  
 
-    **Ejercicio recomendado:**  
-    - **Fuerza:** 2-3 veces por semana para mantener tono muscular.  
-    - **Cardio:** 3-5 veces por semana (puede incluir HIIT y ejercicios aeróbicos).  
-    - **Movilidad:** Yoga o estiramientos para evitar lesiones."""
+    Ejercicio recomendado:  
+    - Fuerza: 2-3 veces por semana para mantener tono muscular.  
+    - Cardio: 3-5 veces por semana (puede incluir HIIT y ejercicios aeróbicos).  
+    - Movilidad: Yoga o estiramientos para evitar lesiones."""
 
 #--------------------------------------
 def predict_calories(exercise,exercise_options):

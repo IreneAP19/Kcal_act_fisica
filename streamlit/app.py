@@ -385,7 +385,7 @@ elif opcion == "Estimación de kcal diarias y Recomendaciones":
                 st.warning(f"No se pudieron calcular los macronutrientes para el objetivo '{objetivo}'. Error: {e}")
                 
         recomendaciones = utils.recomendaciones(st.session_state["prediccion_ob"])
-        st.write(recomendaciones)
+        st.markdown(recomendaciones, unsafe_allow_html=True)
     
 if opcion == "Gráficos y Análisis":
     st.title("📈 Análisis Visual")
